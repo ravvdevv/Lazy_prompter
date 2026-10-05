@@ -3,31 +3,38 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Generate perfect AI prompts with Lazy Prompter - Create optimized prompts for GPT models with ease">
-    <meta name="theme-color" content="#4f46e5">
-    <meta name="color-scheme" content="light dark">
-    
-    <!-- Favicon -->
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    <link rel="alternate icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    
-    <!-- Open Graph / Social Media -->
-    <meta property="og:title" content="Lazy Prompter">
-    <meta property="og:description" content="Generate perfect AI prompts with Lazy Prompter - Create optimized prompts for GPT models with ease">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://lazyprompts.vercel.app">
-    <meta property="og:image" content="/og-image.jpg">
-    
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Lazy Prompter">
-    <meta name="twitter:description" content="Generate perfect AI prompts with Lazy Prompter">
-    <meta name="twitter:image" content="/twitter-card.jpg">
-    
-    <title>Lazy Prompter - AI Prompt Generator</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Lazy Prompter</title>
+    <meta
+      name="description"
+      content="Describe a task in a sentence and get back a structured prompt you can paste straight into ChatGPT, Claude, or Gemini."
+    />
+    <link rel="icon" href="/logo.jpg" type="image/jpeg" />
 
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Lazy Prompter" />
+    <meta
+      property="og:description"
+      content="Describe a task in a sentence and get back a structured prompt you can paste straight into ChatGPT, Claude, or Gemini."
+    />
+    <meta property="og:url" content="https://lazyprompts.vercel.app" />
+    <meta property="og:image" content="https://lazyprompts.vercel.app/logo.jpg" />
+    <meta name="twitter:card" content="summary" />
+
+    <script>
+      // Runs before first paint so the correct theme is already on <html>
+      // when the first frame renders. A toggle added later would flash light.
+      (() => {
+        try {
+          const stored = localStorage.getItem('theme') || 'system';
+          const dark =
+            stored === 'dark' ||
+            (stored === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+          document.documentElement.classList.toggle('dark', dark);
+        } catch {
+          /* localStorage blocked: fall through to the light default */
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+/* Dark mode is class-driven so the user can override the OS preference.
+   index.html applies the class before first paint to avoid a flash. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Desert palette: warm sepia neutrals, sky-blue primary, terracotta accent.
+   Neutrals stay warm in both themes so the page never reads as cold grey. */
+:root {
+  --canvas: #faf8f5;
+  --panel: #ffffff;
+  --inset: #f4f0ea;
+  --line: #e4ddd2;
+  --line-strong: #cfc5b6;
+  --primary: #1c1917;
+  --secondary: #57534e;
+  --muted: #726a63;
+  --brand: #2173f0;
+  --brand-hover: #1b5fc4;
+  --on-brand: #ffffff;
+  --focus: #2173f0;
+  --focus-halo: rgb(33 115 240 / 0.18);
+  --accent: #c2560d;
+  --danger: #b42318;
+  --danger-bg: #fdf2f1;
+  --danger-line: #f0c2bd;
+  --shadow: 0 1px 2px rgb(28 25 23 / 0.05);
+  --shadow-lift: 0 12px 32px -12px rgb(28 25 23 / 0.18);
+  color-scheme: light;
+}
+
+.dark {
+  --canvas: #141210;
+  --panel: #1c1917;
+  --inset: #262220;
+  --line: #332e29;
+  --line-strong: #4d453c;
+  --primary: #f5f1ec;
+  --secondary: #bcb2a6;
+  --muted: #9a9085;
+  --brand: #6aa5ff;
+  --brand-hover: #8bbcff;
+  --on-brand: #0f1216;
+  --focus: #6aa5ff;
+  --focus-halo: rgb(106 165 255 / 0.22);
+  --accent: #ff9a4a;
+  --danger: #ff9a8f;
+  --danger-bg: #2b1a18;
+  --danger-line: #5a2f2a;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-lift: 0 12px 32px -12px rgb(0 0 0 / 0.6);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-panel: var(--panel);
+  --color-inset: var(--inset);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-muted: var(--muted);
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-on-brand: var(--on-brand);
+  --color-accent: var(--accent);
+  --color-danger: var(--danger);
+  --color-danger-bg: var(--danger-bg);
+  --color-danger-line: var(--danger-line);
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* Georgia carries the editorial voice of the wordmark and headline. It ships
+     with every OS, so there is no webfont request and no flash of unstyled text. */
+  --font-display: Georgia, ui-serif, "Times New Roman", serif;
+  /* The output is a prompt the user copies verbatim, so the whitespace and
+     indentation they will receive need to be legible. That is the whole reason
+     for mono here; headings and body stay in the sans stack. */
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--canvas);
+    color: var(--primary);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Set once here rather than per call site, so scrollIntoView inherits the
+     user's motion preference instead of hardcoding "smooth". */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* One focus treatment for every interactive element, so focus is always
+     visible and always the same shape. */
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+}
+
+/* Indeterminate progress. The only gradient in the app: it shows that work is
+   happening, and it is the brand ramp, so the motion belongs to the brand. */
+@keyframes indeterminate {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(400%);
+  }
+}
+
+.animate-indeterminate {
+  animation: indeterminate 1.1s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-indeterminate {
+    animation: none;
+    width: 100%;
+  }
+}

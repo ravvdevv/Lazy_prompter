@@ -12,6 +12,17 @@ dist
 dist-ssr
 *.local
 docs
+
+# Secrets. Only .env.example is committed.
+.env
+.env.*
+!.env.example
+
+# Agent tooling state
+.omc/
+.devserver.log
+.devserver.err
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
